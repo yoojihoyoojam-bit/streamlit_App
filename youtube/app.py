@@ -7,7 +7,6 @@ from wordcloud import WordCloud
 from googleapiclient.discovery import build
 from urllib.parse import urlparse, parse_qs
 from collections import Counter
-from konlpy.tag import Okt
 import requests
 import re
 from datetime import datetime
@@ -366,8 +365,6 @@ if run:
     st.divider()
     st.header("☁️ 댓글 키워드 분석")
 
-    okt = Okt()
-
     stopwords = [
         "것","수","정도","진짜","그냥","너무","정말","영상",
         "이번","오늘","저는","제가","ㅋㅋ","ㅎㅎ","ㅠㅠ",
@@ -377,24 +374,18 @@ if run:
         "하나","같은","이런","그런","더","좀","잘","왜",
         "또","이제","진심","완전","진짜로","ㅋㅋㅋ","ㅎㅎㅎ"
     ]
+text = " ".join(df["댓글"].astype(str))
 
-    nouns = []
+text = re.sub(r"http\S+", "", text)
+text = re.sub(r"@[A-Za-z0-9_]+", "", text)
+text = re.sub(r"[^가-힣 ]", " ", text)
 
-    for text in df["댓글"]:
+words = re.findall(r"[가-힣]{2,}", text)
 
-        text = str(text)
+words = [w for w in words if w not in stopwords]
 
-        text = re.sub(r"http\S+","",text)
-        text = re.sub(r"@[A-Za-z0-9_]+","",text)
-        text = re.sub(r"[^가-힣 ]"," ",text)
+counter = Counter(words)
 
-        for word in okt.nouns(text):
-
-            if len(word) >= 2 and word not in stopwords:
-
-                nouns.append(word)
-
-    counter = Counter(nouns)
 
     # =====================================================
     # TOP30 단어
