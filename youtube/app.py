@@ -374,17 +374,17 @@ if run:
         "하나","같은","이런","그런","더","좀","잘","왜",
         "또","이제","진심","완전","진짜로","ㅋㅋㅋ","ㅎㅎㅎ"
     ]
-text = " ".join(df["댓글"].astype(str))
+    text = " ".join(df["댓글"].astype(str))
 
-text = re.sub(r"http\S+", "", text)
-text = re.sub(r"@[A-Za-z0-9_]+", "", text)
-text = re.sub(r"[^가-힣 ]", " ", text)
+    text = re.sub(r"http\S+", "", text)
+    text = re.sub(r"@[A-Za-z0-9_]+", "", text)
+    text = re.sub(r"[^가-힣 ]", " ", text)
 
-words = re.findall(r"[가-힣]{2,}", text)
+    words = re.findall(r"[가-힣]{2,}", text)
 
-words = [w for w in words if w not in stopwords]
+    words = [w for w in words if w not in stopwords]
 
-counter = Counter(words)
+    counter = Counter(words)
 
 
     # =====================================================
