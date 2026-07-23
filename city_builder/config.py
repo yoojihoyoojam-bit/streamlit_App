@@ -1,0 +1,15 @@
+MAP_SIZE = 10
+
+START_MONEY = 1000
+START_POPULATION = 0
+START_HAPPINESS = 50
+START_POWER = 100
+
+EMPTY = "⬜"
+
+BUILDING_TYPES = [
+    "🏠",
+    "🏪",
+    "🏭",
+    "🌳"
+]
